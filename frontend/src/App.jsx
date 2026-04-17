@@ -33,6 +33,10 @@ const App = () => {
       <Route path='/dashboard/employer/postjob' element={<PostJob/>}/>
       <Route path='/dashboard/employer/applications' element={<ManageApplication/>}/>
       <Route path='/dashboard/employer/analytics' element={<ViewAnalytics/>}/>
+
+
+     {/*Shared */}
+     <Route path/>
     </Routes>
       
     </>
