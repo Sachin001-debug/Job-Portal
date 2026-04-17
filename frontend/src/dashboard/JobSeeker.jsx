@@ -19,6 +19,7 @@ import Footer from "../components/Footer";
 import { useState } from "react";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import DisplayRoleBased from "../shared/DisplayRoleBased";
 
 const JoobSeeker = () => {
   const [user, setUser] = useState(null);
@@ -222,7 +223,7 @@ const JoobSeeker = () => {
 
       {/* Job Listings */}
 
-      <JobSeekerTopJobs />
+      <DisplayRoleBased/>
       <TrainingCards />
       <Footer />
     </>

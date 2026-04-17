@@ -10,6 +10,7 @@ import {
 import { DummyTopCandidates } from "../assets/assests";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import DisplayRoleBased from "../shared/DisplayRoleBased";
 
 
 const Employer = () => {
@@ -115,42 +116,8 @@ const Employer = () => {
 
 
        {/* Top Candidates Section */}
-       <div className="p-6">
-  <h1 className="text-xl font-semibold mb-4">
-    Top Candidates Right Now
-  </h1>
-
-  {/* Grid Layout */}
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-    {DummyTopCandidates.map((candidate, index) => (
-      <div
-        key={index}
-        className="bg-white shadow-md rounded-xl p-4 flex flex-col items-center text-center hover:shadow-lg transition"
-      >
-        {/* Profile Image */}
-        <img
-          src={candidate.profilePicture}
-          alt={candidate.name}
-          className="w-20 h-20 rounded-full object-cover mb-3 border"
-        />
-
-        {/* Info */}
-        <h2 className="font-semibold text-lg">{candidate.name}</h2>
-        <p className="text-gray-500 text-sm">
-          {candidate.profession}
-        </p>
-        <p className="text-gray-400 text-xs">
-          {candidate.location}
-        </p>
-
-        {/* Button */}
-        <button className="mt-3 px-4 py-1 bg-purple-500 text-white rounded-lg text-sm hover:bg-purple-600 transition">
-          View Profile
-        </button>
-      </div>
-    ))}
-  </div>
-</div>
+       
+       <DisplayRoleBased/>
     </>
   );
 };

@@ -6,12 +6,15 @@ import { Route, Routes } from 'react-router-dom'
 //Dashboard
 import JobSeeker from './dashboard/JobSeeker'
 import Employer from './dashboard/Employer'
+//pages
 import PostJob from './pages/EmployerPages/PostJob'
 import JobSeekerProfile from './pages/JobseekerPages/JobSeekerProfile'
 import DisplayJobs from './pages/JobseekerPages/DisplayJobs'
 import ApplyJob from './pages/JobseekerPages/ApplyJob'
 import ManageApplication from './pages/EmployerPages/ManageApplication'
 import ViewAnalytics from './pages/EmployerPages/ViewAnalytics'
+import DisplayJoobseeker from './pages/EmployerPages/DisplayJoobseeker'
+
 const App = () => {
   return (
     <>

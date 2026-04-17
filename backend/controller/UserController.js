@@ -113,7 +113,7 @@ const getMe = async(req,res)=>{
       }
 
       res.status(200).json({success:true, message:"User Fetched", user:{
-        id: req.user._id,
+        id: req.user.id,
         name: req.user.name,
         email: req.user.email,
         role: req.user.role,
@@ -122,6 +122,32 @@ const getMe = async(req,res)=>{
         console.log(err);
          res.status(500).json({ success: false, message: 'Server Error' });
     }
+}
+
+const getRoleBasedProfile = async(req,res)=>{
+  try{
+     const  currentUserRole = req.user.role;
+
+     let targetRole;
+
+       if (currentUserRole === "employer") {
+      targetRole = "jobseeker";
+    } else {
+      targetRole = "employer";
+    }
+
+    const users = await User.find({role: targetRole})
+     .select("name email role")
+     .limit(9);
+
+     res.status(200).json({
+      success: true,
+      message: "Profiles fetched successfully",
+      users,
+    });
+  }catch(err){
+    console.log(err)
+  }
 }
 
 
@@ -196,4 +222,4 @@ const uplodImageHandler = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
-export {registerUser, loginUser, getMe, uplodImageHandler, changePassword};
+export {registerUser, loginUser, getMe, uplodImageHandler, changePassword, getRoleBasedProfile};

@@ -91,8 +91,8 @@ const LoginSignup = () => {
       {/* Left side */}
       <div className="w-full md:w-1/2 bg-gradient-to-br from-[#140727] to-[#2a0f4a] flex items-center justify-center flex-col text-white p-8">
         <div>
-          <img src={logo} alt="Logo" className="w-[100px] h-[150px] " />
-          <div className="max-w-md text-center md:text-left">
+          <img src={logo} alt="Logo" className="fade-in  w-[100px] h-[150px] " />
+          <div className="fade-in  max-w-md text-center md:text-left">
             {currentForm === "login" ? (
               <h1 className="text-2xl md:text-4xl font-bold mb-4">
                 Welcome Back!
@@ -112,7 +112,7 @@ const LoginSignup = () => {
 
       {/* Right side */}
       <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-6 md:p-8 bg-gray-50">
-        <div className="w-full max-w-md border border-gray-200 shadow-lg rounded-xl p-6 md:p-8 flex flex-col items-center gap-5 bg-white transition-all duration-300">
+        <div className="fade-in  w-full max-w-md border border-gray-200 shadow-lg rounded-xl p-6 md:p-8 flex flex-col items-center gap-5 bg-white transition-all duration-300">
           {/* Signup extra field */}
           {currentForm === "signup" && (
             <div className="flex flex-col gap-2 w-full">
