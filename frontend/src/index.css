@@ -5,7 +5,28 @@ body{
      font-family: "Outfit", sans-serif;
 }
 
+.hero-bg {
+  background: radial-gradient(
+      circle at 50% 50%,
+      rgb(159, 159, 244),
+      transparent 60%
+    ),
+    rgb(255, 228, 228);  
+}
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+.fade-in {
+  animation: fadeInAnimation 1.5s ease-out forwards;
+}
 
 /*animation for the top employers section*/
 @keyframes scroll {
