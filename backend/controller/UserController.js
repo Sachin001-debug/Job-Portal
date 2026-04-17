@@ -182,7 +182,6 @@ const uplodImageHandler = async (req, res) => {
       return res.status(400).json({ success: false, message: 'No file uploaded' });
     }
 
-    // Save clean relative path
     user.profileImage = `uploads/${req.file.filename}`;
     await user.save();
 
