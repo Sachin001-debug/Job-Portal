@@ -13,7 +13,7 @@ const applyJob = async (req, res) => {
     }
 
     const alreadyApplied = await ApplyJob.findOne({
-      email,
+      user: req.user._id,
       job: jobId,
     });
 
@@ -31,15 +31,14 @@ const applyJob = async (req, res) => {
       email,
       job: jobId,
       resume: resumePath,
+      user: req.user._id,
     });
-    console.log("Incoming jobId:", jobId);
 
     res.status(201).json({
       success: true,
       message: "Applied successfully",
       application,
     });
-
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -49,5 +48,25 @@ const applyJob = async (req, res) => {
   }
 };
 
+const getMyapplication = async (req, res) => {
+  try {
+    const userId = req.user._id;
 
-export default applyJob
+    const applications = await ApplyJob.find({ user: userId })
+      .populate("job", "title company location type")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      applications,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+export { applyJob, getMyapplication };

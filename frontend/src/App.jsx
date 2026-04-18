@@ -2,18 +2,18 @@ import React from 'react'
 import Home from './home/Home'
 import LoginSignup from './home/LoginSignup'
 import { Route, Routes } from 'react-router-dom'
-
 //Dashboard
 import JobSeeker from './dashboard/JobSeeker'
 import Employer from './dashboard/Employer'
 //pages
 import PostJob from './pages/EmployerPages/PostJob'
-import JobSeekerProfile from './pages/JobseekerPages/JobSeekerProfile'
 import DisplayJobs from './pages/JobseekerPages/DisplayJobs'
 import ApplyJob from './pages/JobseekerPages/ApplyJob'
 import ManageApplication from './pages/EmployerPages/ManageApplication'
 import ViewAnalytics from './pages/EmployerPages/ViewAnalytics'
 import DisplayJoobseeker from './pages/EmployerPages/DisplayJoobseeker'
+import ApplicationStatus from './pages/JobseekerPages/ApplicationStatus'
+import Profile from './shared/Profile'
 
 const App = () => {
   return (
@@ -24,9 +24,9 @@ const App = () => {
 
       {/*Jobseeker Dashboard */}
       <Route path="/dashboard/jobseeker" element={<JobSeeker/>} />
-      <Route path='/dashboard/jobseeker/profile' element={<JobSeekerProfile/>}/>
      <Route path='/dashboard/jobseeker/jobs' element={<DisplayJobs/>}/>
      <Route path='/dashboard/jobseeker/jobs/apply/:id' element={<ApplyJob/>}/>
+     <Route path='/dashboard/jobseeker/application' element={<ApplicationStatus/>}/>
 
       {/*Employer Dashbaord */}
       <Route path="/dashboard/employer" element={<Employer/>} />
@@ -34,9 +34,8 @@ const App = () => {
       <Route path='/dashboard/employer/applications' element={<ManageApplication/>}/>
       <Route path='/dashboard/employer/analytics' element={<ViewAnalytics/>}/>
 
-
-     {/*Shared */}
-     <Route path/>
+      {/*Shared */}
+      <Route path='/profile' element={<Profile/>}/>
     </Routes>
       
     </>

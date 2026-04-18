@@ -6,6 +6,7 @@ import {
   BarChart2,
   Settings,
   SearchIcon,
+  User,
 } from "lucide-react";
 import { DummyTopCandidates } from "../assets/assests";
 import { useNavigate } from "react-router-dom";
@@ -44,9 +45,9 @@ const Employer = () => {
             <BarChart2 size={18} />
             View Analytics
           </li>
-          <li className="flex items-center gap-1 hover:text-purple-600 cursor-pointer">
-            <Settings size={18} />
-            Settings
+          <li onClick={()=>navigate('/profile')} className="flex items-center gap-1 hover:text-purple-600 cursor-pointer">
+            <User size={18} />
+            Profile
           </li>
         </ul>
 

@@ -28,7 +28,7 @@ app.use('/api/user', userRouter);
 
 // Job seeker routes
 app.use('/api/jobseeker/jobs', jobPostRouter);      // list all jobs, get single job
-app.use('/api/jobseeker/job', applyJobRouter);   // apply for job
+app.use('/api/jobseeker/job', applyJobRouter);   // apply for job and get application
 
 // Employer routes
 app.use('/api/employer/jobs', jobPostRouter);      // create job, view own jobs

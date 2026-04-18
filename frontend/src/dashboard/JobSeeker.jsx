@@ -66,19 +66,15 @@ const JoobSeeker = () => {
             <Briefcase size={18} /> Jobs
           </li>
 
-          <li className="flex text-lg items-center gap-2 font-medium cursor-pointer hover:text-purple-400">
+          <li onClick={()=>navigate('/dashboard/jobseeker/application')} className="flex text-lg items-center gap-2 font-medium cursor-pointer hover:text-purple-400">
             <FileText size={18} /> Applications
           </li>
 
           <li
-            onClick={() => navigate("/dashboard/jobseeker/profile")}
+            onClick={() => navigate("/profile")}
             className="flex text-lg font-medium items-center gap-2 cursor-pointer hover:text-purple-400"
           >
             <User size={18} /> Profile
-          </li>
-
-          <li className="flex text-lg font-medium items-center gap-2 cursor-pointer hover:text-purple-400">
-            <Settings size={18} /> Settings
           </li>
         </ul>
 
