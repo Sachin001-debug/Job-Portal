@@ -50,13 +50,21 @@ const JoobSeeker = () => {
   const logoutHandler = () => {
     const token = localStorage.getItem("token");
     localStorage.removeItem(token);
-    navigate('/login');
+    navigate("/login");
     toast.success("Logout Successfull");
-  }
+  };
 
   const menuItems = [
-    { label: "Jobs", icon: <Briefcase size={18} />, path: "/dashboard/jobseeker/jobs" },
-    { label: "Applications", icon: <FileText size={18} />, path: "/dashboard/jobseeker/application" },
+    {
+      label: "Jobs",
+      icon: <Briefcase size={18} />,
+      path: "/dashboard/jobseeker/jobs",
+    },
+    {
+      label: "Applications",
+      icon: <FileText size={18} />,
+      path: "/dashboard/jobseeker/application",
+    },
     { label: "Profile", icon: <User size={18} />, path: "/profile" },
   ];
 
@@ -65,22 +73,30 @@ const JoobSeeker = () => {
       {/* Navbar */}
       <nav className="flex items-center justify-between px-4 py-3 bg-white text-white shadow-[0_2px_10px_rgba(0,0,0,0.3)] border-b border-gray-100">
         {/* Logo */}
-        <h1 className="font-bold text-black text-xl md:text-2xl">HireNepal</h1>
+        <div className="flex gap-4">
+          <h1 className="font-bold text-black text-xl md:text-2xl">
+            HireNepal
+          </h1>
 
-        {/* Hamburger Icon */}
-        <button 
-          className="lg:hidden block"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? <X size={24} className="text-black" /> : <Menu size={24} className="text-black" />}
-        </button>
+          {/* Hamburger Icon */}
+          <button
+            className="lg:hidden block"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <X size={24} className="text-black" />
+            ) : (
+              <Menu size={24} className="text-black" />
+            )}
+          </button>
+        </div>
 
         {/* Menu Items - Desktop */}
         <ul className="hidden text-black lg:flex items-center gap-6 text-sm">
           {menuItems.map((item, index) => (
-            <li 
+            <li
               key={index}
-              onClick={() => navigate(item.path)} 
+              onClick={() => navigate(item.path)}
               className="flex text-lg items-center gap-2 font-medium cursor-pointer hover:text-purple-400"
             >
               {item.icon} {item.label}
@@ -90,7 +106,10 @@ const JoobSeeker = () => {
 
         {/* Right Side */}
         <div className="flex items-center gap-3">
-          <li onClick={logoutHandler} className="flex text-lg text-black font-medium gap-2 justify-center items-center text-sm cursor-pointer hover:text-red-400 list-none">
+          <li
+            onClick={logoutHandler}
+            className="flex text-lg text-black font-medium gap-2 justify-center items-center text-sm cursor-pointer hover:text-red-400 list-none"
+          >
             <LogOut size={16} className="cursor-pointer" />
             <span className="hidden sm:inline">Logout</span>
           </li>
@@ -107,12 +126,12 @@ const JoobSeeker = () => {
         <div className="lg:hidden fixed inset-0 top-[57px] bg-white z-50 shadow-lg">
           <ul className="flex flex-col gap-4 p-6">
             {menuItems.map((item, index) => (
-              <li 
+              <li
                 key={index}
                 onClick={() => {
                   navigate(item.path);
                   setIsMenuOpen(false);
-                }} 
+                }}
                 className="flex items-center gap-3 p-3 hover:bg-purple-50 rounded-lg cursor-pointer text-black"
               >
                 {item.icon}
@@ -120,11 +139,11 @@ const JoobSeeker = () => {
               </li>
             ))}
             <hr className="my-2" />
-            <li 
+            <li
               onClick={() => {
                 logoutHandler();
                 setIsMenuOpen(false);
-              }} 
+              }}
               className="flex items-center gap-3 p-3 hover:bg-red-50 text-red-600 rounded-lg cursor-pointer"
             >
               <LogOut size={18} />
@@ -150,28 +169,40 @@ const JoobSeeker = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
             Start Your Journey Today,
             {user ? (
-              <span className="text-xl sm:text-2xl md:text-3xl text-blue-800 block md:inline"> {user.name}</span>
+              <span className="text-xl sm:text-2xl md:text-3xl text-blue-800 block md:inline">
+                {" "}
+                {user.name}
+              </span>
             ) : (
               <span>Loading...</span>
             )}
           </h1>
 
           <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-6">
-            <li onClick={() => navigate('/dashboard/jobseeker/jobs')} className="flex items-center gap-2 text-base sm:text-lg font-medium cursor-pointer hover:text-blue-600 list-none">
+            <li
+              onClick={() => navigate("/dashboard/jobseeker/jobs")}
+              className="flex items-center gap-2 text-base sm:text-lg font-medium cursor-pointer hover:text-blue-600 list-none"
+            >
               <div className="p-2 bg-purple-500 text-white rounded-full flex items-center justify-center shadow-[0_4px_6px_rgba(128,0,128,0.4)]">
                 <Briefcase size={16} />
               </div>
               Jobs
             </li>
 
-            <li onClick={() => navigate('/dashboard/jobseeker/application')} className="flex items-center gap-2 text-base sm:text-lg font-medium cursor-pointer hover:text-blue-600 list-none">
+            <li
+              onClick={() => navigate("/dashboard/jobseeker/application")}
+              className="flex items-center gap-2 text-base sm:text-lg font-medium cursor-pointer hover:text-blue-600 list-none"
+            >
               <div className="p-2 bg-purple-500 text-white rounded-full flex items-center justify-center shadow-[0_4px_6px_rgba(128,0,128,0.4)]">
                 <FileText size={16} />
               </div>
               Applications
             </li>
 
-            <li onClick={() => navigate('/profile')} className="flex items-center gap-2 text-base sm:text-lg font-medium cursor-pointer hover:text-blue-600 list-none">
+            <li
+              onClick={() => navigate("/profile")}
+              className="flex items-center gap-2 text-base sm:text-lg font-medium cursor-pointer hover:text-blue-600 list-none"
+            >
               <div className="p-2 bg-purple-500 text-white rounded-full flex items-center justify-center shadow-[0_4px_6px_rgba(128,0,128,0.4)]">
                 <User size={16} />
               </div>
@@ -216,7 +247,9 @@ const JoobSeeker = () => {
       <div className="flex items-center bg-gray-200 shadow-md shadow-purple-200 p-3 gap-3 sm:gap-6 overflow-hidden">
         {/* Title */}
         <div className="w-[150px] sm:w-[200px] shrink-0">
-          <h1 className="text-base sm:text-xl ml-2 font-semibold">Top Employers</h1>
+          <h1 className="text-base sm:text-xl ml-2 font-semibold">
+            Top Employers
+          </h1>
         </div>
 
         {/* Animated Logos */}
@@ -256,7 +289,7 @@ const JoobSeeker = () => {
       </div>
 
       {/* Job Listings */}
-      <DisplayRoleBased/>
+      <DisplayRoleBased />
       <TrainingCards />
       <Footer />
     </>
