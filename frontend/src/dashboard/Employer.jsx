@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LogoImg from "../assets/user-img.jpg";
 import {
   Briefcase,
@@ -18,6 +18,18 @@ import DisplayRoleBased from "../shared/DisplayRoleBased";
 
 const Employer = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMenuOpen]);
 
   const handleLogout = () => {
     const token = localStorage.getItem("token");
@@ -112,15 +124,18 @@ const Employer = () => {
               </li>
             ))}
             <hr className="my-2" />
-            <li
-              onClick={() => {
-                handleLogout();
-                setIsMenuOpen(false);
-              }}
-              className="flex items-center gap-3 p-3 hover:bg-red-50 text-red-600 rounded-lg cursor-pointer transition-colors"
-            >
-              Logout
-            </li>
+            <div className="flex items-center">
+              <LogOut size={18} className="text-red-600"/>
+              <li
+                onClick={() => {
+                  handleLogout();
+                  setIsMenuOpen(false);
+                }}
+                className="flex items-center gap-3 p-3 hover:bg-red-50 text-red-600 rounded-lg cursor-pointer transition-colors"
+              >
+                Logout
+              </li>
+            </div>
           </ul>
         </div>
       )}

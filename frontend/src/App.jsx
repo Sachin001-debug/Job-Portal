@@ -14,6 +14,8 @@ import ViewAnalytics from './pages/EmployerPages/ViewAnalytics'
 import DisplayJoobseeker from './pages/EmployerPages/DisplayJoobseeker'
 import ApplicationStatus from './pages/JobseekerPages/ApplicationStatus'
 import Profile from './shared/Profile'
+import ResumeForm from './pages/JobseekerPages/ResumeForm'
+import DisplayResume from './pages/JobseekerPages/DisplayResume'
 
 const App = () => {
   return (
@@ -27,7 +29,8 @@ const App = () => {
      <Route path='/dashboard/jobseeker/jobs' element={<DisplayJobs/>}/>
      <Route path='/dashboard/jobseeker/jobs/apply/:id' element={<ApplyJob/>}/>
      <Route path='/dashboard/jobseeker/application' element={<ApplicationStatus/>}/>
-
+     <Route path='/dashboard/jobseeker/resume-form' element={<ResumeForm/>}/>
+       <Route path='/dashboard/jobseeker/display/resume-form' element={<DisplayResume/>}/>
       {/*Employer Dashbaord */}
       <Route path="/dashboard/employer" element={<Employer/>} />
       <Route path='/dashboard/employer/postjob' element={<PostJob/>}/>

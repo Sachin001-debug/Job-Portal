@@ -8,6 +8,7 @@ import userRouter from './routes/userRoute.js';
 import jobPostRouter from './routes/jobPostRoute.js';
 import applyJobRouter from './routes/applyJobRoute.js';
 import employerRouter from './routes/employerRoute.js';
+import resumeFormRouter from './routes/resumeFormRoute.js';
 
 dotenv.config(); 
 
@@ -34,6 +35,7 @@ app.use('/api/user', userRouter);
 // Job seeker routes
 app.use('/api/jobseeker/jobs', jobPostRouter);      // list all jobs, get single job
 app.use('/api/jobseeker/job', applyJobRouter);   // apply for job and get application
+app.use('/api/jobseeker', resumeFormRouter); //manual resume inputs
 
 // Employer routes
 app.use('/api/employer/jobs', jobPostRouter);      // create job, view own jobs

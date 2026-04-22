@@ -10,6 +10,8 @@ import {
   Menu,
   SearchIcon,
   X,
+  DonutIcon,
+  File,
 } from "lucide-react";
 import BannerImg from "../assets/banner-job-seeker.webp";
 import userImg from "../assets/user-img.jpg";
@@ -66,7 +68,22 @@ const JoobSeeker = () => {
       path: "/dashboard/jobseeker/application",
     },
     { label: "Profile", icon: <User size={18} />, path: "/profile" },
+    {
+      label:"Resume", icon: <File size={18}/>, path: "/dashboard/jobseeker/resume-form"
+    }    
   ];
+
+  useEffect(() => {
+      if (isMenuOpen) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "unset";
+      }
+      return () => {
+        document.body.style.overflow = "unset";
+      };
+    }, [isMenuOpen]);
+  
 
   return (
     <>
@@ -113,11 +130,14 @@ const JoobSeeker = () => {
             <LogOut size={16} className="cursor-pointer" />
             <span className="hidden sm:inline">Logout</span>
           </li>
-          <img
+       <div onClick={()=>navigate('/dashboard/jobseeker/display/resume-form')}>
+           <img
+            onCanPlay={()=>navigate('/dashboard/jobseeker/display/resume-form')}
             src={userImg}
             alt="User"
             className="w-9 h-9 rounded-full border border-gray-500"
           />
+       </div>
         </div>
       </nav>
 
