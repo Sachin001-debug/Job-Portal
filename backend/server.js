@@ -16,10 +16,11 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors({
-  origin: "https://hirenepal.vercel.app",
-  credentials: true
-}));
-
+  origin: 'https://hirenepal.vercel.app', 
+  credentials: true, 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}))
 // connect DB
 connectDb();
 
