@@ -16,8 +16,8 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors({
-  origin: 'https://hirenepal.vercel.app', 
-  credentials: true, 
+  origin: ['https://hirenepal.vercel.app', 'http://localhost:5173', 'https://hirenepal.onrender.com'],
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }))
