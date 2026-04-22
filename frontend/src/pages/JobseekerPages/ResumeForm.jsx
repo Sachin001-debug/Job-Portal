@@ -4,7 +4,7 @@ import { Trash2, Plus } from "lucide-react";
 import axios from "axios";
 
 const ResumeForm = () => {
-  const API = import.meta.env.VITE_LOCAL;
+  const API = import.meta.env.VITE_API;
   // Personal Information
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");

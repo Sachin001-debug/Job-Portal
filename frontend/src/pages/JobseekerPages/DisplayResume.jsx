@@ -6,7 +6,7 @@ import axios from 'axios';
 const DisplayResume = () => {
     const [resume, setResume] = useState(null);
     const [loading, setLoading] = useState(true);
-    const API = import.meta.env.VITE_LOCAL;
+    const API = import.meta.env.VITE_API;
 
     const fetchResume = async () => {
         try {
