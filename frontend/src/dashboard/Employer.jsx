@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import LogoImg from "../assets/user-img.jpg";
 import {
   Briefcase,
@@ -18,6 +19,42 @@ import DisplayRoleBased from "../shared/DisplayRoleBased";
 
 const Employer = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const API = import.meta.env.VITE_API;
+  const Base_API = import.meta.env.VITE_URL;
+  const navigate = useNavigate();
+
+  // Fetch user data
+  const getUser = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const res = await axios.get(`${API}/user/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const userData = res.data.user;
+      setUser(userData);
+
+      // Set profile image preview
+      if (userData.profileImage) {
+        const cleanPath = userData.profileImage.replace(/^\/+/, '');
+        const fullImageUrl = `${Base_API}/${cleanPath}`;
+        setImagePreview(fullImageUrl);
+      } else {
+        setImagePreview(null);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -32,13 +69,10 @@ const Employer = () => {
   }, [isMenuOpen]);
 
   const handleLogout = () => {
-    const token = localStorage.getItem("token");
     localStorage.removeItem("token");
     navigate("/login");
-    toast.success("Logout Successfull!");
+    toast.success("Logout Successful!");
   };
-
-  const navigate = useNavigate();
 
   const menuItems = [
     {
@@ -63,8 +97,10 @@ const Employer = () => {
     <>
       <nav className="flex items-center justify-between bg-white p-4 shadow-md border-b border-gray-200">
         {/* Left: Title */}
-        <div className="flex gap-4">
-          <h1 className="text-xl font-bold text-gray-800">Hire Nepal</h1>
+        <div className="flex gap-4 items-center">
+          <h1 className="text-xl font-bold text-gray-800 whitespace-nowrap">
+            Hire Nepal
+          </h1>
 
           {/* Hamburger Icon - Visible on mobile */}
           <button
@@ -89,18 +125,26 @@ const Employer = () => {
           ))}
         </ul>
 
-        <div className="flex gap-4 justify-center">
-          <div className="flex gap-1 justify-center items-center hover:text-red-400">
-            <LogOut size={17} className="" />
-            <button onClick={handleLogout} className="cursor-pointer">
-              logout
-            </button>
-          </div>
-          <div className="flex items-center gap-3">
+        {/* Right Side - Logout and Profile Image */}
+        <div className="flex items-center gap-4 flex-shrink-0">
+          <button
+            onClick={handleLogout}
+            className="flex gap-1 justify-center items-center hover:text-red-400 cursor-pointer"
+          >
+            <LogOut size={17} />
+            <span className="hidden sm:inline">logout</span>
+          </button>
+          
+          <div className="flex items-center gap-3 cursor-pointer">
             <img
-              src={LogoImg}
+              src={imagePreview || LogoImg}
               alt="Profile"
-              className="w-10 h-10 rounded-full border border-gray-300"
+              className="w-10 h-10 rounded-full border border-gray-300 object-cover"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = LogoImg;
+              }}
+              onClick={() => navigate("/profile")}
             />
           </div>
         </div>
@@ -124,18 +168,16 @@ const Employer = () => {
               </li>
             ))}
             <hr className="my-2" />
-            <div className="flex items-center">
-              <LogOut size={18} className="text-red-600"/>
-              <li
-                onClick={() => {
-                  handleLogout();
-                  setIsMenuOpen(false);
-                }}
-                className="flex items-center gap-3 p-3 hover:bg-red-50 text-red-600 rounded-lg cursor-pointer transition-colors"
-              >
-                Logout
-              </li>
-            </div>
+            <li
+              onClick={() => {
+                handleLogout();
+                setIsMenuOpen(false);
+              }}
+              className="flex items-center gap-3 p-3 hover:bg-red-50 text-red-600 rounded-lg cursor-pointer transition-colors"
+            >
+              <LogOut size={18} />
+              <span>Logout</span>
+            </li>
           </ul>
         </div>
       )}
@@ -144,7 +186,7 @@ const Employer = () => {
         {/* Welcome Message */}
         <div className="w-full md:w-[40%] text-center md:text-left">
           <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-4">
-            Welcome To Employer Dashboard!
+            Welcome To Employer Dashboard, {user?.name?.split(' ')[0] || 'User'}!
           </h2>
           <p className="text-sm md:text-base text-gray-600 px-4 md:px-0">
             Manage your job postings, review applications, and track analytics
