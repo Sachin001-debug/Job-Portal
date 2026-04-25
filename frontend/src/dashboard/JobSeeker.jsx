@@ -43,11 +43,15 @@ const JoobSeeker = () => {
       });
 
       const userData = res.data.user;
-
       setUser(userData);
 
+      // Fixed: Proper image URL construction
       if (userData.profileImage) {
-        setImagePreview(`${Base_API}/${userData.profileImage}`);
+        // Remove leading slashes to prevent double slashes
+        const cleanPath = userData.profileImage.replace(/^\/+/, '');
+        const fullImageUrl = `${Base_API}/${cleanPath}`;
+        console.log("Setting image preview:", fullImageUrl); // For debugging
+        setImagePreview(fullImageUrl);
       } else {
         setImagePreview(null);
       }
@@ -61,10 +65,9 @@ const JoobSeeker = () => {
   }, []);
 
   const logoutHandler = () => {
-
     localStorage.removeItem("token");
     navigate("/login");
-    toast.success("Logout Successfull");
+    toast.success("Logout Successful");
   };
 
   const menuItems = [
@@ -132,6 +135,8 @@ const JoobSeeker = () => {
             </li>
           ))}
         </ul>
+
+        {/* Right Side - Fixed with proper image display */}
         <div className="flex items-center gap-3 flex-shrink-0">
           <li
             onClick={logoutHandler}
@@ -145,13 +150,14 @@ const JoobSeeker = () => {
             className="flex-shrink-0 cursor-pointer"
           >
             <img
-              src={
-                user?.profileImage
-                  ? `${Base_API}/${user.profileImage}`
-                  : imagePreview || "/default-avatar.png"
-              }
+              src={imagePreview || "/default-avatar.png"}
               className="w-9 h-9 rounded-full border border-gray-500 object-cover"
               alt="user"
+              onError={(e) => {
+                // Fallback to default avatar if image fails to load
+                e.target.onerror = null;
+                e.target.src = "/default-avatar.png";
+              }}
             />
           </div>
         </div>

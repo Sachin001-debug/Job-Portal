@@ -22,7 +22,7 @@ const Profile = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
- const API = import.meta.env.VITE_API;
+  const API = import.meta.env.VITE_API;
   const Base_API = import.meta.env.VITE_URL;
 
   const navigate = useNavigate();
@@ -42,11 +42,17 @@ const Profile = () => {
       const userData = res.data.user;
       setUser(userData);
 
+      // FIXED: Use correct variable name Base_API (not BaseAPI)
       if (userData.profileImage) {
-      setImagePreview(`${Base_API}/${userData.profileImage}`);
+        // Remove any leading slashes to prevent double slashes
+        const imagePath = userData.profileImage.replace(/^\/+/, '');
+        setImagePreview(`${Base_API}/${imagePath}`);
+      } else {
+        setImagePreview(null);
       }
     } catch (err) {
       console.error(err);
+      toast.error("Failed to load profile");
       navigate("/login");
     } finally {
       setLoading(false);
@@ -77,18 +83,24 @@ const Profile = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(`${API}/user/upload-image`, formData, {
+      const response = await axios.post(`${API}/user/upload-image`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-      await getUser();
-      toast.success("Profile picture updated successfully!");
-      setSelectedFile(null);
+
+      if (response.data.success) {
+        // Refresh user data to get the new image path
+        await getUser();
+        toast.success("Profile picture updated successfully!");
+        setSelectedFile(null);
+      } else {
+        toast.error(response.data.message || "Failed to update picture");
+      }
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to update picture");
+      console.error("Upload error:", err);
+      toast.error(err.response?.data?.message || "Failed to update picture");
     } finally {
       setIsSaving(false);
     }
@@ -134,7 +146,10 @@ const Profile = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        Loading profile...
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading profile...</p>
+        </div>
       </div>
     );
   }
@@ -153,6 +168,10 @@ const Profile = () => {
                   src={imagePreview || "/default-avatar.png"}
                   alt="Profile"
                   className="w-40 h-40 rounded-full object-cover border-4 border-white shadow-lg"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/default-avatar.png";
+                  }}
                 />
                 <label className="absolute bottom-3 right-3 bg-blue-600 text-white p-3 rounded-full cursor-pointer hover:bg-blue-700 transition shadow">
                   <Camera size={20} />
