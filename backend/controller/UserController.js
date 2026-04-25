@@ -112,11 +112,18 @@ const getMe = async(req,res)=>{
      return res.status(401).json({ success: false, message: 'Not authorized' });
       }
 
+      const user = await User.findById(req.user.id);
+
+        if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
       res.status(200).json({success:true, message:"User Fetched", user:{
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email,
-        role: req.user.role,
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        profileImage: user.profileImage 
       }})
     }catch(err){
         console.log(err);
@@ -208,7 +215,7 @@ const uplodImageHandler = async (req, res) => {
       return res.status(400).json({ success: false, message: 'No file uploaded' });
     }
 
-    user.profileImage = `uploads/${req.file.filename}`;
+    user.profileImage = `uploads/ProfilePic/${req.file.filename}`;
     await user.save();
 
     res.status(200).json({ 

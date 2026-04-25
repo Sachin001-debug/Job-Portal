@@ -22,8 +22,9 @@ const Profile = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const API = import.meta.env.VITE_API;
-  const uploadAPI = import.meta.env.VITE_URL;
+ const API = import.meta.env.VITE_API;
+  const Base_API = import.meta.env.VITE_URL;
+
   const navigate = useNavigate();
 
   const getUser = async () => {
@@ -42,7 +43,7 @@ const Profile = () => {
       setUser(userData);
 
       if (userData.profileImage) {
-        setImagePreview(`${API}/${userData.profileImage}`);
+      setImagePreview(`${BaseAPI}/${userData.profileImage}`);
       }
     } catch (err) {
       console.error(err);
@@ -76,12 +77,13 @@ const Profile = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(`${uploadAPI}/user/upload-image`, formData, {
+      await axios.post(`${API}/user/upload-image`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
+      await getUser();
       toast.success("Profile picture updated successfully!");
       setSelectedFile(null);
     } catch (err) {

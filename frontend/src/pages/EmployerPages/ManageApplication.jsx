@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { File } from "lucide-react";
 
 const ManageApplication = () => {
+  
   const [myJobs, setMyJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [applications, setApplications] = useState([]);

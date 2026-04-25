@@ -14,7 +14,6 @@ import {
   File,
 } from "lucide-react";
 import BannerImg from "../assets/banner-job-seeker.webp";
-import userImg from "../assets/user-img.jpg";
 import { employersLogos } from "../assets/assests";
 import JobSeekerTopJobs from "../components/JobSeekerTopJobs";
 import TrainingCards from "../components/TrainingCards";
@@ -27,21 +26,33 @@ import DisplayRoleBased from "../shared/DisplayRoleBased";
 const JoobSeeker = () => {
   const [user, setUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+
   const API = import.meta.env.VITE_API;
+  const Base_API = import.meta.env.VITE_URL;
+
   const navigate = useNavigate();
 
   const getUser = async () => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) return null;
+      if (!token) return;
 
       const res = await axios.get(`${API}/user/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUser(res.data.user);
+
+      const userData = res.data.user;
+
+      setUser(userData);
+
+      if (userData.profileImage) {
+        setImagePreview(`${Base_API}/${userData.profileImage}`);
+      } else {
+        setImagePreview(null);
+      }
     } catch (err) {
       console.error(err);
-      return null;
     }
   };
 
@@ -69,33 +80,34 @@ const JoobSeeker = () => {
     },
     { label: "Profile", icon: <User size={18} />, path: "/profile" },
     {
-      label:"Resume", icon: <File size={18}/>, path: "/dashboard/jobseeker/resume-form"
-    }    
+      label: "Resume",
+      icon: <File size={18} />,
+      path: "/dashboard/jobseeker/resume-form",
+    },
   ];
 
   useEffect(() => {
-      if (isMenuOpen) {
-        document.body.style.overflow = "hidden";
-      } else {
-        document.body.style.overflow = "unset";
-      }
-      return () => {
-        document.body.style.overflow = "unset";
-      };
-    }, [isMenuOpen]);
-  
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMenuOpen]);
 
   return (
     <>
       {/* Navbar */}
       <nav className="flex items-center justify-between px-4 py-3 bg-white text-white shadow-[0_2px_10px_rgba(0,0,0,0.3)] border-b border-gray-100">
-        {/* Logo */}
-        <div className="flex gap-4">
-          <h1 className="font-bold text-black text-xl md:text-2xl">
+        {/* Logo and Hamburger Section */}
+        <div className="flex items-center gap-4">
+          <h1 className="font-bold text-black text-xl md:text-2xl whitespace-nowrap">
             HireNepal
           </h1>
 
-          {/* Hamburger Icon */}
+          {/* Hamburger Icon - Mobile */}
           <button
             className="lg:hidden block"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -120,9 +132,7 @@ const JoobSeeker = () => {
             </li>
           ))}
         </ul>
-
-        {/* Right Side */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-shrink-0">
           <li
             onClick={logoutHandler}
             className="flex text-lg text-black font-medium gap-2 justify-center items-center text-sm cursor-pointer hover:text-red-400 list-none"
@@ -130,14 +140,20 @@ const JoobSeeker = () => {
             <LogOut size={16} className="cursor-pointer" />
             <span className="hidden sm:inline">Logout</span>
           </li>
-       <div onClick={()=>navigate('/dashboard/jobseeker/display/resume-form')}>
-           <img
-            onCanPlay={()=>navigate('/dashboard/jobseeker/display/resume-form')}
-            src={userImg}
-            alt="User"
-            className="w-9 h-9 rounded-full border border-gray-500"
-          />
-       </div>
+          <div
+            onClick={() => navigate("/dashboard/jobseeker/display/resume-form")}
+            className="flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src={
+                user?.profileImage
+                  ? `${Base_API}/${user.profileImage}`
+                  : imagePreview || "/default-avatar.png"
+              }
+              className="w-9 h-9 rounded-full border border-gray-500 object-cover"
+              alt="user"
+            />
+          </div>
         </div>
       </nav>
 
