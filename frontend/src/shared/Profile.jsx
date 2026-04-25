@@ -43,7 +43,7 @@ const Profile = () => {
       setUser(userData);
 
       if (userData.profileImage) {
-      setImagePreview(`${BaseAPI}/${userData.profileImage}`);
+      setImagePreview(`${Base_API}/${userData.profileImage}`);
       }
     } catch (err) {
       console.error(err);

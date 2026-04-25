@@ -61,8 +61,8 @@ const JoobSeeker = () => {
   }, []);
 
   const logoutHandler = () => {
-    const token = localStorage.getItem("token");
-    localStorage.removeItem(token);
+
+    localStorage.removeItem("token");
     navigate("/login");
     toast.success("Logout Successfull");
   };
