@@ -215,7 +215,8 @@ const uplodImageHandler = async (req, res) => {
       return res.status(400).json({ success: false, message: 'No file uploaded' });
     }
 
-    user.profileImage = `uploads/ProfilePic/${req.file.filename}`;
+    // Store the URL path (not the filesystem path)
+    user.profileImage = `/uploads/ProfilePic/${req.file.filename}`;
     await user.save();
 
     res.status(200).json({ 
