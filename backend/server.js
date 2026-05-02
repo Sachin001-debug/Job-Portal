@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors({
-  origin: ['https://job-portal-zeta-opal.vercel.app/', 'http://localhost:5173', 'https://hirenepal.onrender.com'],
+  origin: ['https://job-portal-zeta-opal.vercel.app/', 'https://job-portal-6b3q1xmgq-sachins-projects-389c53a1.vercel.app/login', 'http://localhost:5173', 'https://hirenepal.onrender.com'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
