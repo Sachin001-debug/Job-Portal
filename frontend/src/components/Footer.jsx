@@ -12,6 +12,8 @@ const Footer = () => {
           </p>
         </div>
 
+        
+
         {/* Column 2: Job Seeker */}
         <div>
           <h2 className="text-xl font-semibold mb-4">Job Seeker</h2>
