@@ -157,7 +157,6 @@ const getRoleBasedProfile = async(req,res)=>{
   }
 }
 
-
 const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
@@ -215,7 +214,7 @@ const uplodImageHandler = async (req, res) => {
       return res.status(400).json({ success: false, message: 'No file uploaded' });
     }
 
-    // Store the URL path (not the filesystem path)
+    //url path
     user.profileImage = `/uploads/ProfilePic/${req.file.filename}`;
     await user.save();
 

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/S1K9S-removebg-preview.png";
 import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
-import { set } from "mongoose";
 
 const LoginSignup = () => {
   const [currentForm, setCurrentForm] = useState("login");
